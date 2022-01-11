@@ -5,6 +5,7 @@ const uint32_t VIDEO_WIDTH = 64;
 
 const unsigned int FONTSET_SIZE = 80;
 const unsigned int START_ADDRESS = 0x200;
+const unsigned int FONTSET_START_ADDRESS = 0x50;
 const unsigned char fontset[FONTSET_SIZE] =
 { 
   0xF0, 0x90, 0x90, 0x90, 0xF0, // 0

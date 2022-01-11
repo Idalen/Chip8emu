@@ -97,8 +97,8 @@ void CPU::op_Cxkk(){
 }
 
 void CPU::op_Dxyn(){
-    uint8_t x = (opcode & 0x0F00) >> 8;
-    uint8_t y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8u;
+    uint8_t y = (opcode & 0x00F0) >> 4u;
     uint8_t height = opcode & 0x000F;
 
     uint8_t posx = V[x] % VIDEO_WIDTH;
@@ -111,15 +111,15 @@ void CPU::op_Dxyn(){
         uint8_t spriteByte = memory[I + row];
 
         for (unsigned int col = 0; col < 8; col++){
-            uint8_t spritePixel = spriteByte & (0x80 >> col);
+            uint8_t spritePixel = spriteByte & (0x80u >> col);
             uint32_t *screenPixel = gfx + ((posy+row) * VIDEO_WIDTH + (posx+col));
 
             if(spritePixel){
-                if(*screenPixel == 0xFFFFFFFF){
+                if(*screenPixel == 0xFFFFFFFFu){
                     V[0xF] = 1;
                 }
 
-                *screenPixel^=0xFFFFFFFF;
+                *screenPixel^=0xFFFFFFFFu;
             }
         }
     }
@@ -214,7 +214,7 @@ void CPU::op_Ex9E(){
 }
 
 void CPU::op_ExA1(){
-    uint8_t x  = (opcode & 0x0F00u) >> 8;
+    uint8_t x  = (opcode & 0x0F00u) >> 8u;
     uint8_t k = V[x];
 
     if(!key[k]){
@@ -258,9 +258,9 @@ void CPU::op_Fx1E(){
 
 void CPU::op_Fx29(){
     uint8_t x = (opcode & 0x0F00u) >> 8u;
-    uint16_t offset = (uint16_t) 5*V[x];
+    uint16_t offset = 5* V[x];
     
-    I = START_ADDRESS + offset;
+    I = FONTSET_START_ADDRESS + offset;
 }
 
 void CPU::op_Fx33(){
@@ -304,8 +304,8 @@ CPU::CPU(){
     // Clear memory
     
     // Load fontset
-    for(int i = 0; i < 80; ++i)
-      memory[i] = fontset[i];		
+    for(int i = 0; i < FONTSET_SIZE; ++i)
+      memory[FONTSET_START_ADDRESS + i] = fontset[i];		
     
     // Reset timers
 }
@@ -336,8 +336,8 @@ void CPU::load(const char* file_path){
 
 void CPU::run(){
 
-    log();
     fetch();
+    log();
     execute();
 
     updateTimers();  

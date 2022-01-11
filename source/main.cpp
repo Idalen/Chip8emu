@@ -10,13 +10,13 @@ using namespace std;
 int main(){
 
     const int videoScale = 10;
-    const int cycleDelay = 2;
+    const int cycleDelay = 3;
 
     Platform* platform = new Platform("CHIP-8 Emu", VIDEO_WIDTH * videoScale, 
                     VIDEO_HEIGHT * videoScale, VIDEO_WIDTH, VIDEO_HEIGHT);
     
     CPU* cpu = new CPU();
-    cpu->load("./roms/Space_Invaders.ch8");
+    cpu->load("./roms/Tetris.ch8");
 
 
     auto lastCycleTime = std::chrono::high_resolution_clock::now();
@@ -37,6 +37,7 @@ int main(){
 
             platform->update(cpu->get_video(), videoPitch);
 		}
+
     }
 
     delete cpu;
