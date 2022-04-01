@@ -9,14 +9,14 @@ using namespace std;
 
 int main(){
 
-    const int videoScale = 10;
-    const int cycleDelay = 3;
+    const int videoScale = 15;
+    const int cycleDelay = 2.5;
 
     Platform* platform = new Platform("CHIP-8 Emu", VIDEO_WIDTH * videoScale, 
                     VIDEO_HEIGHT * videoScale, VIDEO_WIDTH, VIDEO_HEIGHT);
     
     CPU* cpu = new CPU();
-    cpu->load("./roms/Tetris.ch8");
+    cpu->load("./roms/Pong.ch8");
 
 
     auto lastCycleTime = std::chrono::high_resolution_clock::now();
